@@ -20,12 +20,14 @@ package org.lineageos.settings;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.SystemProperties;
 import android.util.Log;
 import androidx.preference.PreferenceManager;
 
+import org.lineageos.settings.dirac.DiracUtils;
 import org.lineageos.settings.doze.DozeUtils;
 import org.lineageos.settings.popupcamera.PopupCameraUtils;
 import org.lineageos.settings.thermal.ThermalUtils;
@@ -45,6 +47,12 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         
         if (DEBUG) Log.d(TAG, "Received boot completed intent");
 
+        try {
+            DiracUtils.getInstance(context);
+        } catch (Exception e) {
+            Log.d(TAG, "Dirac is not present in system");
+        }
+
         DozeUtils.checkDozeService(context);
         PopupCameraUtils.checkPopupCameraService(context);
         ThermalUtils.startService(context);
@@ -52,5 +60,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         RefreshUtils.startService(context); 
         boolean dcDimmingEnabled = sharedPrefs.getBoolean(DC_DIMMING_ENABLE_KEY, false);
         FileUtils.writeLine(DC_DIMMING_NODE, dcDimmingEnabled ? "1" : "0"); 
+
+
     }
 }
