@@ -142,6 +142,22 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += audioadsprpcd
 PRODUCT_PACKAGES += vendor.qti.audio-adsprpc-service.rc
 
+# Audio Alsa Extensions
+PRODUCT_PACKAGES += \
+   libaudioroute \
+   libaudioroutev2 \
+   libalsautils \
+   libalsautilsv2
+
+# Audio Debugging Packages
+ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
+PRODUCT_PACKAGES += \
+    tinyplay \
+    tinycap \
+    tinymix \
+    tinypcminfo \
+    cplay
+endif
 
 # Audio configs
 PRODUCT_COPY_FILES += \
