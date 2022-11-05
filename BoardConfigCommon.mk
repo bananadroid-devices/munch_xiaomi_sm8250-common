@@ -234,7 +234,13 @@ ifeq ($(TARGET_IS_VAB),true)
 BOARD_MOVE_GSI_AVB_KEYS_TO_VENDOR_BOOT := true
 endif
 
-# WiFi
+#Dolby
+ifeq ($(TARGET_USES_MIUI_DOLBY),true)
+DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE += \
+     $(COMMON_PATH)/dolby/manifests/dolby_framework_matrix.xml
+endif
+
+# Wi-Fi
 BOARD_WLAN_DEVICE := qcwcn
 BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
